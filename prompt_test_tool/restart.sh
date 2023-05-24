@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# 停止容器
+sudo docker stop prompt_test_tool
+
+# 删除容器
+sudo docker rm prompt_test_tool
+
+# 构建镜像
+sudo docker build -t prompt_test_tool .
+
+# 运行容器
+sudo docker run -d --network=hbt-network --name prompt_test_tool --restart always -p 8786:8786 prompt_test_tool
+
+

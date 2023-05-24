@@ -1,0 +1,88 @@
+<html>
+<head>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            height: 90vh;
+        }
+        .input-area, .middle-area, .output-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30%;
+        }
+        .input-area, .middle-area {
+            flex-wrap: wrap;
+        }
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            height: 13vh;
+        }
+        .button-area {
+            height: 10vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        textarea {
+            width: 100%;
+        }
+        textarea#middle-output, textarea#output-output {
+            height: 75%;
+        }
+        textarea#middle-output2, textarea#output-output2 {
+            height: 15%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-area">
+            <form method="POST" id="myForm">
+                {% for i in range(1, 6) %}
+                <div class="input-row">
+                    <label for="input{{i}}">{{i}}</label>
+                    <textarea id="input{{i}}" name="input{{i}}">{{inputs[i-1]}}</textarea>
+                    <label for="input{{i+5}}">{{i+5}}</label>
+                    <textarea id="input{{i+5}}" name="input{{i+5}}">{{inputs[i+4]}}</textarea>
+                </div>
+                {% endfor %}
+                <label for="user-input">User输入</label>
+                <textarea id="user-input" name="user-input" style="height: 70px;">{{user_input}}</textarea>
+                <label for="temperature">Temperature</label>
+                <input type="range" id="temperature" name="temperature" min="0" max="1" step="0.1" value="{{temperature}}" oninput="updateTemperatureValue(this.value);">
+                <span id="temperatureValue">{{temperature}}</span>
+                <br>
+                <label for="ordering_system">system排序</label>
+                <input type="text" id="ordering_system" name="ordering_system" value="{{ordering_system}}" style="height: 30px;">
+                <br>
+                <label for="ordering">对话排序&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" id="ordering" name="ordering" value="{{ordering}}" style="height: 30px;">
+            </form>
+        </div>
+        <div class="middle-area">
+            <label for="middle-output">3.5prompt</label>
+            <textarea id="middle-output" readonly>{{middle_result}}</textarea>
+            <label for="middle-output2">3.5运行结果</label>
+            <textarea id="middle-output2" readonly>{{middle_result2}}</textarea>
+        </div>
+        <div class="output-area">
+            <label for="output-output">4.0prompt</label>
+            <textarea id="output-output" readonly>{{output_result}}</textarea>
+            <label for="output-output2">4.0运行结果</label>
+            <textarea id="output-output2" readonly>{{output_result2}}</textarea>
+        </div>
+    </div>
+    <div class="button-area">
+        <input type="submit" form="myForm" value="运行">
+        <button onclick="location.reload();">重置</button>
+    </div>
+    <script>
+    function updateTemperatureValue(val) {
+        document.getElementById('temperatureValue').innerText = val;
+    }
+    </script>
+</body>
+</html>

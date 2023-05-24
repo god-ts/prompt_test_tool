@@ -1,0 +1,8 @@
+flask
+requests
+gunicorn==20.1.0
+numpy
+pandas
+openai
+matplotlib
+plotly
